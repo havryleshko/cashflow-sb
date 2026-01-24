@@ -1,0 +1,10 @@
+Cashflow summary
+Status: {status}
+Runway (weeks): {runway_weeks}
+Lowest cash: {lowest_cash_amount} on {lowest_cash_date}
+
+Top drivers:
+{drivers}
+
+Recommended actions:
+{actions}
