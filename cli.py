@@ -8,8 +8,15 @@ from orchestrator import run_cashflow_analysis
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Cashflow forecast CLI")
-    parser.add_argument("csv_path", help="Path to transactions CSV")
-    parser.add_argument("starting_balance", type=float, help="Starting cash balance")
+    parser.add_argument("csv_path", nargs="?", help="Path to transactions CSV")
+    parser.add_argument("starting_balance", nargs="?", type=float, help="Starting cash balance")
+    parser.add_argument("--csv", dest="csv_path_flag", help="Path to transactions CSV")
+    parser.add_argument(
+        "--starting-balance",
+        dest="starting_balance_flag",
+        type=float,
+        help="Starting cash balance",
+    )
     parser.add_argument("--weeks", type=int, default=12, help="Forecast weeks (default: 12)")
     parser.add_argument(
         "--report-out",
@@ -20,9 +27,17 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
+    csv_path = args.csv_path_flag or args.csv_path
+    starting_balance = (
+        args.starting_balance_flag if args.starting_balance_flag is not None else args.starting_balance
+    )
+
+    if not csv_path or starting_balance is None:
+        raise SystemExit("csv path and starting balance are required")
+
     output, report = run_cashflow_analysis(
-        csv_path=Path(args.csv_path),
-        starting_balance=args.starting_balance,
+        csv_path=Path(csv_path),
+        starting_balance=starting_balance,
         forecast_weeks=args.weeks,
     )
 
