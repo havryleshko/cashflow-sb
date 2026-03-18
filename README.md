@@ -1,6 +1,6 @@
 # CashFlow AI MVP
 
-Deterministic cashflow pipeline with an optional OpenAI-generated report.
+Predicts 12-week cashflow of the small business based on its financials
 
 ## Setup
 
